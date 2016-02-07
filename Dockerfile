@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
 # Install Python packages
 RUN pip install \
     docutils \
-    sphinx_bootstrap_theme
+    sphinx_bootstrap_theme \
+    PyGithub \
+    wget
     
 CMD (cd doc && python sncn-xdoc/xdoc.py html)
