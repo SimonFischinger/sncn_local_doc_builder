@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y \
 RUN pip install \
     docutils \
     sphinx_bootstrap_theme \
-    PyGithub \
-    wget
+    PyGithub 
     
 CMD (cd doc && python sncn-xdoc/xdoc.py html)
