@@ -16,4 +16,7 @@ RUN pip install \
     sphinx_bootstrap_theme \
     PyGithub 
     
-CMD (cd doc && python sncn-xdoc/xdoc.py html)
+COPY build_doc.py /build_doc.py
+
+#ENTRYPOINT ["./build_doc.py"]
+#CMD ["--build"]

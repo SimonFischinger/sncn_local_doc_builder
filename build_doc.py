@@ -33,7 +33,7 @@ def main():
 			download_from_git(parse_links(folder), folder)
 	if (results.build):
 		prep_workspace()
-		#os.system('(cd /doc && python sncn-xdoc/xdoc.py html)')
+		os.system('(cd /doc && python sncn-xdoc/xdoc.py html)')
 	
 	
 	
@@ -63,9 +63,9 @@ def prep_workspace():
 	
 	
 	# Check if workspace contains links
+	firstHit = True	
 	for d in directoryList:
-		dirname = glob.glob(basedir + d + "/*")			
-		firstHit = True		
+		dirname = glob.glob(basedir + d + "/*")				
 		for name in dirname:
 			if os.path.islink(name):
 				if firstHit:
@@ -78,18 +78,18 @@ def prep_workspace():
 						print "Stopping documentation builder. Cannot build based on Symbolic Links... "
 						exit()
 						
-				print name + " is link!\n"
+				print name + " is link!"
 				print "Delete Link..."
-				#os.remove(name)
+				os.remove(name)
 	# Symbolic link has been found and removed -> Check Github for data
-	if firstHit:
+	if not firstHit:
 		print "Checking Github for documentation data ... "
 		for d in directoryList:
 			download_from_git(parse_links(d), d)
 		
 	
 def download_from_git(repositories, directory):
-	g = Github("SimonFischinger", "669c2d295a52eccbbbd9a12480941140105f83a5")
+	g = Github(os.environ.get('GIT_USER'), os.environ.get('GIT_PW'))
 	sncn_orgs = ("synapticon", "sncn-private", "sncn-hub")
 	
 	for org in g.get_user().get_orgs():
